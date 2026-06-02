@@ -4,11 +4,21 @@ import './navbar.css';
 import Link from 'next/link';
 
 type NavbarProps = {
-    nome: string;
-    onLogout: () => void;
+    nome?: string;
+    onLogout?: () => void;
 };
 
-export default function Navbar({ nome, onLogout }: NavbarProps) {
+export default function NavBar({
+    nome = 'Usuário',
+    onLogout
+}: NavbarProps) {
+
+    function handleLogout() {
+        if (onLogout) {
+            onLogout();
+        }
+    }
+
     return (
         <nav className="navbar">
 
@@ -33,7 +43,7 @@ export default function Navbar({ nome, onLogout }: NavbarProps) {
             </ul>
 
             <div className="navbar-user">
-                <button onClick={onLogout}>
+                <button onClick={handleLogout}>
                     Sair
                 </button>
             </div>

@@ -10,14 +10,13 @@ export default function Dashboard() {
 
     const router = useRouter();
 
-    const [nomeUsuario, setNomeUsuario] = useState("");
+    const [name, setName] = useState("");
 
     const {
         produtos,
         loading,
         listarProdutos,
-        excluir,
-        prepararEdicao
+        excluir
     } = useProdutos();
 
     useEffect(() => {
@@ -28,7 +27,7 @@ export default function Dashboard() {
         const userName = Cookies.get("userName");
 
         if (userName) {
-            setNomeUsuario(userName);
+            setName(userName);
         } else {
             router.push("/");
         }
@@ -44,7 +43,7 @@ export default function Dashboard() {
         <div>
 
             <NavBar
-                nome={nomeUsuario}
+                nome={name}
                 onLogout={logout}
             />
 
@@ -68,7 +67,6 @@ export default function Dashboard() {
                             borderCollapse: 'collapse'
                         }}
                     >
-
                         <thead>
                             <tr style={{ borderBottom: '2px solid #eee' }}>
                                 <th style={{ textAlign: 'left', padding: '10px' }}>
@@ -91,7 +89,6 @@ export default function Dashboard() {
                                     key={p.id}
                                     style={{ borderBottom: '1px solid #eee' }}
                                 >
-
                                     <td style={{ padding: '10px' }}>
                                         {p.nome}
                                     </td>
@@ -108,7 +105,9 @@ export default function Dashboard() {
                                     >
 
                                         <button
-                                            onClick={() => prepararEdicao(p)}
+                                            onClick={() =>
+                                                router.push(`/dashboard/produto/${p.id}`)
+                                            }
                                             style={{
                                                 marginRight: '10px',
                                                 color: '#007bff',
@@ -136,11 +135,11 @@ export default function Dashboard() {
                                 </tr>
                             ))}
                         </tbody>
-
                     </table>
                 )}
 
             </div>
+
         </div>
     );
 }
